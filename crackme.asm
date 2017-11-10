@@ -50,19 +50,21 @@ checkkey:
 	mov rbx, rax
 	mov rax, key
 	call strlen
+	mov rcx, rax
 	call max
 	mov rdx, rax
-	cmp rax, rbx
+	cmp rcx, rbx
 	jne notequal
 	mov rax, buffer
 	mov rbx, key
 	mov rcx, 0
 	checkloop:
 		push rax
-		mov rax, [rax]
-		cmp [rbx], rax
-		pop rax
+		mov r8, rax
+		mov al, byte [r8]
+		cmp byte [rbx], al
 		jne notequal
+		pop rax
 		cmp rdx, rcx
 		je equal
 		inc rax
@@ -96,7 +98,7 @@ section .data
 	loselen equ $ - losemsg
 	entermsg db "password: ", 0x0
 	enterlength equ $ - entermsg
-	key db 'HELLO', 0xa, 0x0
+	key db 'yougotitthatwasprettygood', 0xa, 0x0
 
 section .bss
 	buffer: resb 64
